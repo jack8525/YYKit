@@ -118,7 +118,7 @@ NS_ASSUME_NONNULL_BEGIN
      // variable arg is not object
      [view performSelectorWithArgsOnMainThread:@selector(setCenter:), waitUntilDone:NO, CGPointMake(0, 0)];
  */
-- (nullable id)performSelectorWithArgsOnMainThread:(SEL)sel waitUntilDone:(BOOL)wait, ...;
+- (nullable id)performSelectorWithArgsOnMainThread:(SEL)sel waitUntilDone:(NSNumber *)wait, ...;
 
 /**
  Invokes a method of the receiver on the specified thread using the default mode.
@@ -154,7 +154,7 @@ NS_ASSUME_NONNULL_BEGIN
          return [num2 compare:num2];
      }];
  */
-- (nullable id)performSelectorWithArgs:(SEL)sel onThread:(NSThread *)thread waitUntilDone:(BOOL)wait, ...;
+- (nullable id)performSelectorWithArgs:(SEL)sel onThread:(NSThread *)thread waitUntilDone:(NSNumber *)wait, ...;
 
 /**
  Invokes a method of the receiver on a new background thread.

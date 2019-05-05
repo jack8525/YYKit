@@ -48,17 +48,17 @@ va_end(args);
     [inv performSelector:@selector(invoke) withObject:nil afterDelay:delay];
 }
 
-- (id)performSelectorWithArgsOnMainThread:(SEL)sel waitUntilDone:(BOOL)wait, ...{
+- (id)performSelectorWithArgsOnMainThread:(SEL)sel waitUntilDone:(NSNumber *)wait, ...{
     INIT_INV(wait, nil);
     if (!wait) [inv retainArguments];
-    [inv performSelectorOnMainThread:@selector(invoke) withObject:nil waitUntilDone:wait];
+    [inv performSelectorOnMainThread:@selector(invoke) withObject:nil waitUntilDone:wait.boolValue];
     return wait ? [NSObject getReturnFromInv:inv withSig:sig] : nil;
 }
 
-- (id)performSelectorWithArgs:(SEL)sel onThread:(NSThread *)thr waitUntilDone:(BOOL)wait, ...{
+- (id)performSelectorWithArgs:(SEL)sel onThread:(NSThread *)thr waitUntilDone:(NSNumber *)wait, ...{
     INIT_INV(wait, nil);
     if (!wait) [inv retainArguments];
-    [inv performSelector:@selector(invoke) onThread:thr withObject:nil waitUntilDone:wait];
+    [inv performSelector:@selector(invoke) onThread:thr withObject:nil waitUntilDone:wait.boolValue];
     return wait ? [NSObject getReturnFromInv:inv withSig:sig] : nil;
 }
 
@@ -140,6 +140,7 @@ return @(ret); \
 
 + (void)setInv:(NSInvocation *)inv withSig:(NSMethodSignature *)sig andArgs:(va_list)args {
     NSUInteger count = [sig numberOfArguments];
+    //invocation有2个隐藏参数，所以 rgument从2开始
     for (int index = 2; index < count; index++) {
         char *type = (char *)[sig getArgumentTypeAtIndex:index];
         while (*type == 'r' || // const

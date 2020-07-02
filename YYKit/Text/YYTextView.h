@@ -48,6 +48,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)textView:(YYTextView *)textView didLongPressHighlight:(YYTextHighlight *)highlight inRange:(NSRange)characterRange rect:(CGRect)rect;
 @end
 
+@protocol YYTextViewSelectMenuDelegate <NSObject>
+@optional
+
+/** 在即将进入选择文本选择状态时调用 */
+-(void)textViewWillShowSelectMenu:(YYTextView *)textView;
+
+/** 在即将推出选择文本选择状态时调用 */
+-(void)textViewWillHideSelectMenu:(YYTextView *)textView;
+
+@end
 
 #if !TARGET_INTERFACE_BUILDER
 
@@ -76,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///=============================================================================
 
 @property (nullable, nonatomic, weak) id<YYTextViewDelegate> delegate;
-
+@property (nullable, nonatomic, weak) id<YYTextViewSelectMenuDelegate> delegateSelectMenu;
 
 #pragma mark - Configuring the Text Attributes
 ///=============================================================================

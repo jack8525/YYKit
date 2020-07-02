@@ -619,6 +619,9 @@ typedef NS_ENUM(NSUInteger, YYTextMoveDirection) {
             }
         });
     }
+    if ([self.delegateSelectMenu respondsToSelector:@selector(textViewWillShowSelectMenu:)]) {
+        [self.delegateSelectMenu textViewWillShowSelectMenu:self];
+    }
 }
 
 /// Hide the UIMenuController.
@@ -628,6 +631,11 @@ typedef NS_ENUM(NSUInteger, YYTextMoveDirection) {
         UIMenuController *menu = [UIMenuController sharedMenuController];
         [menu setMenuVisible:NO animated:YES];
     }
+
+    if ([self.delegateSelectMenu respondsToSelector:@selector(textViewWillHideSelectMenu:)]) {
+        [self.delegateSelectMenu textViewWillHideSelectMenu:self];
+    }
+
     if (_containerView.isFirstResponder) {
         _state.ignoreFirstResponder = YES;
         [_containerView resignFirstResponder]; // it will call [self becomeFirstResponder], ignore it temporary.

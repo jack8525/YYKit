@@ -88,6 +88,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, weak) id<YYTextViewDelegate> delegate;
 @property (nullable, nonatomic, weak) id<YYTextViewSelectMenuDelegate> delegateSelectMenu;
 
+- (void)_showMenu;
+- (void)_hideMenu;
 #pragma mark - Configuring the Text Attributes
 ///=============================================================================
 /// @name Configuring the Text Attributes
